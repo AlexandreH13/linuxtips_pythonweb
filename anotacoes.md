@@ -70,3 +70,11 @@ Na conexão Cliente Servidor tradicional, passamos pela URL o arquivo que querem
  ![alt text for screen readers](imgs/form.png "Forms")
 
  O CGI (Commons Gatway Interface) é um protocolo que habilita o método POST no navegador. Esse protocolo serve de base para vários outros em outras linguagens (WSGI, ASGI etc). Para usar o CGI, precisamos ter uma pasta na raiz com o nome "cgi-bin". Nela criamos os scripts responsáveis por interceptar os dados do post.
+
+ ### WSGI
+
+ É um padrão criado para o python (cada linguagem tem seu padrão) criado para definir a comunicação entre web services (nginx, apache etc) e os frameworkd (fastapi, flask, django etc). Independente do framework ou webserver utilizado, o WSGI será a interface entre eles definindo as regras de comunicação. Isso permite o uso e criação de vários frameworks no mercado.
+
+ O WSG exige que criamos um objeto callable. Também exige que o callable receba como parâmetro o environment e a função de callback (start_response). Exige também que o retorno seja iterável.
+
+ Um ponto que deve ser sempre levantado é a necessidade de implementar o serviço de uma maneira que suporte multiplas requiseções "ao mesmo tempo"...
