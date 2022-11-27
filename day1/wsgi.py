@@ -15,7 +15,7 @@ def application(environ, start_response):
     start_response(status, headers)
     return [body] # Colocamos em uma lista para retornar um iterável
 
-if __name__ == "__main__":
+#if __name__ == "__main__":
     
-    server = make_server("0.0.0.0", 8000, application)
-    server.serve_forever() # Executa
+#    server = make_server("0.0.0.0", 8000, application)
+#    server.serve_forever() # Executa

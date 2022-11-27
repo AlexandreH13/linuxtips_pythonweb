@@ -77,4 +77,12 @@ Na conexão Cliente Servidor tradicional, passamos pela URL o arquivo que querem
 
  O WSG exige que criamos um objeto callable. Também exige que o callable receba como parâmetro o environment e a função de callback (start_response). Exige também que o retorno seja iterável.
 
- Um ponto que deve ser sempre levantado é a necessidade de implementar o serviço de uma maneira que suporte multiplas requiseções "ao mesmo tempo"...
+ ![alt text for screen readers](imgs/wsgi.png "Forms")
+
+ Um ponto que deve ser sempre levantado é a necessidade de implementar o serviço de uma maneira que suporte multiplas requiseções "ao mesmo tempo". Com o **gunicorn** podemos passar qual aplicação precisamos de fazer o gerenciamento de threads para multithreading (Passamos a função callable que criamos para o WSGI). Passamos como parâmetro a quantidade de workers que o gunicorn vai executar. Exemplo:
+
+  ```bash
+gunicorn wsgi:application -w 8
+ ```
+
+No exemplo que foi feito na pasta "blog", é criado um exemplo de server side rendering (arquivo render.py) usando agora o wsgi.

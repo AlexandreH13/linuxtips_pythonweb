@@ -1,3 +1,4 @@
+# Script que implementa o SSR (Server Side Rendering)
 # 1 - Obtém dados do db
 # 2 - Cria pasta de destino do blog
 # 3 - Cria uma função que gera url (usando slug, que é a utl mais enxuta)
