@@ -1,3 +1,4 @@
+import cgi
 from database import conn
 from pathlib import Path
 
@@ -26,6 +27,17 @@ def get_post_list(posts):
         for post in posts
     ]
     return "\n".join(post_list)
+
+def add_new_post(post):
+    cursor = conn.cursor()
+    cursor.execute(
+        """\
+        INSERT INTO post (title, content, author)
+        VALUES (:title, :content, :author)
+        """,
+        post, # Na sintexe acima, basta passar o dict que o sqlite lê o conteúdo e salva
+    )
+    conn.commit()
 
 def application(environ, start_response):
     body = b"Content Not Found"
@@ -56,6 +68,20 @@ def application(environ, start_response):
             "post.template.html",
             post=get_posts_from_database(post_id=post_id)[0]
         )
+        status = '200 OK'
+    elif path == "/new" and method =="GET":
+        body = render_template("form.template.html")
+        status = "200 OK"
+    elif path == "/new" and method =="POST":
+        form = cgi.FieldStorage(
+            fp = environ["wsgi.input"], # Intercepta os inputs de formulários
+            environ = environ,
+            keep_blank_values=1 # O wsgi não envia informações de campos em branco. Isso pode quebrar o código. Por isso setamos o valor dessa variável
+        )
+        post = {item.name: item.value for item in form.list} # Conteúdo do POST. Pegamos usando o obheto form do cgi
+        add_new_post(post) # Insert do post no banco de dados
+        body = b"New post created with success!" # Body após salvar post
+        status = "201 Created"
 
     # Criar o response
     headers = [("Content-type", "text/html")]
